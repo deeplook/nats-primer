@@ -9,8 +9,9 @@ nats-py client used throughout this primer.
 
 import asyncio
 
+from faststream import ExceptionMiddleware
 from faststream.nats import NatsBroker
-from pydantic import BaseModel, PositiveInt
+from pydantic import BaseModel, PositiveInt, ValidationError
 
 from _nats_config import server_url
 
@@ -21,7 +22,17 @@ class Order(BaseModel):
     qty: PositiveInt
 
 
-broker = NatsBroker(server_url())
+exc_middleware = ExceptionMiddleware()
+
+
+@exc_middleware.add_handler(ValidationError)
+def on_bad_payload(exc: ValidationError) -> None:
+    """Without this, FastStream logs the full traceback for every
+    undeliverable message; here we reduce it to a one-line rejection."""
+    print(f"rejected: {exc.errors()[0]['loc']} - {exc.errors()[0]['msg']}")
+
+
+broker = NatsBroker(server_url(), middlewares=(exc_middleware,))
 
 
 @broker.subscriber("orders.new")

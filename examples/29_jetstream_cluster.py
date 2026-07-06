@@ -35,7 +35,14 @@ async def main() -> None:
         urls.append(url)
         print(f"{name} on {url}")
 
-    nc = await nats.connect(servers=urls, reconnect_time_wait=0.5)
+    async def error_cb(exc: Exception) -> None:
+        # if the client happened to be connected to the node we kill
+        # below, it reconnects — expected here, so don't dump tracebacks
+        print(f"client reconnecting after: {type(exc).__name__}")
+
+    nc = await nats.connect(
+        servers=urls, reconnect_time_wait=0.5, error_cb=error_cb
+    )
     js = nc.jetstream(timeout=10)
 
     async def eventually(operation):

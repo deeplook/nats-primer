@@ -8,6 +8,7 @@ trusts it connects — and everything after that works unchanged.
 """
 
 import asyncio
+import logging
 import ssl
 import subprocess
 import tempfile
@@ -16,6 +17,10 @@ from pathlib import Path
 import nats
 
 from _nats_config import free_port, start_server
+
+# On close, asyncio warns that nats-py's transport returns True from
+# eof_received(), which has no effect over SSL — harmless, so hide it.
+logging.getLogger("asyncio").setLevel(logging.ERROR)
 
 
 def make_self_signed_cert(directory: Path) -> tuple[Path, Path]:

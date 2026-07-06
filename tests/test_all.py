@@ -33,3 +33,11 @@ def test_example_runs_cleanly(module: Path) -> None:
         f"--- stdout (tail) ---\n{result.stdout[-3000:]}\n"
         f"--- stderr (tail) ---\n{result.stderr[-3000:]}"
     )
+    # nats-py and faststream report async failures (e.g. DrainTimeoutError,
+    # handler exceptions) via callbacks/logging and still exit 0 — treat
+    # that noise as failure; no example intentionally prints a traceback.
+    for marker in ("nats: encountered error", "Traceback"):
+        assert marker not in result.stderr, (
+            f"{module.name} wrote {marker!r} to stderr\n"
+            f"--- stderr (tail) ---\n{result.stderr[-3000:]}"
+        )

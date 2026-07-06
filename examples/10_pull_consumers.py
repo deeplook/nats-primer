@@ -48,6 +48,9 @@ async def main() -> None:
     print(f"delivered: {cinfo.delivered.consumer_seq}, "
           f"pending: {cinfo.num_pending}")
 
+    # The timed-out fetch can leave a late status message in the pull
+    # subscription's inbox, which would stall drain() until its timeout.
+    await psub.unsubscribe()
     await js.delete_stream("TASKS")
     await nc.drain()
 
