@@ -16,6 +16,12 @@ tears it down on exit, so there is nothing to set up or clean up between
 examples. To run against an existing server instead, set the `NATS_URL`
 environment variable (start that server with JetStream enabled: `nats-server -js`).
 
+## Sample output
+
+A recorded demo session — click the image to play it on [Asciinema]:
+
+[![asciicast](https://asciinema.org/a/YGmyoAMpbGOJtwsX.png)](https://asciinema.org/a/YGmyoAMpbGOJtwsX)
+
 ## Prerequisites
 
 ### 1. uv
@@ -143,3 +149,5 @@ See [OVERVIEW.md](OVERVIEW.md) for how the pieces fit together.
 - [nats-py — Python client](https://github.com/nats-io/nats.py)
 - [NATS by Example](https://natsbyexample.com)
 - [FastStream documentation](https://faststream.airt.ai)
+
+[Asciinema]: https://asciinema.org
