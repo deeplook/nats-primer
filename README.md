@@ -8,7 +8,8 @@
 A collection of small, self-contained Python scripts for learning
 [NATS](https://nats.io) on a local machine — from core publish/subscribe to
 JetStream persistence, key-value and object stores, microservices,
-authentication, and clustering.
+security (auth, permissions, TLS), WebSocket transport, leaf nodes,
+and clustering.
 
 Every script starts its own throwaway `nats-server` on a random port and
 tears it down on exit, so there is nothing to set up or clean up between
@@ -102,6 +103,12 @@ in order — each builds on concepts introduced by the previous.
 | `examples/21_auth_token.py` | Authentication — a token-protected server |
 | `examples/22_cluster.py` | Clustering — a 3-node cluster and client failover |
 | `examples/23_faststream.py` | FastStream — declarative subscribers with Pydantic validation |
+| `examples/24_ordered_consumers.py` | Ordered consumers — strict, gap-free stream reading |
+| `examples/25_permissions.py` | Users and permissions — per-subject authorization |
+| `examples/26_tls.py` | TLS — encrypted connections with a self-signed certificate |
+| `examples/27_websocket.py` | WebSocket — the same client API over `ws://` |
+| `examples/28_leafnodes.py` | Leaf nodes — extending a NATS system to the edge |
+| `examples/29_jetstream_cluster.py` | Replicated JetStream — streams that survive server loss |
 
 ## Running all tests
 
@@ -118,13 +125,17 @@ beyond having `nats-server` on the PATH.
 - `examples/_nats_config.py` is the shared helper: `connect()` uses
   `NATS_URL` if set, otherwise auto-starts a local server with JetStream
   enabled on a random free port.
-- `08_lifecycle.py`, `21_auth_token.py`, and `22_cluster.py` always start
-  their own dedicated servers (they kill or reconfigure them), regardless
-  of `NATS_URL`.
+- Examples 08, 21, 22, and 25–29 always start their own dedicated servers
+  (they kill or reconfigure them), regardless of `NATS_URL`.
 - `16_object_store.py` writes a retrieved blob to `out/` (gitignored).
 - `20_benchmark.py` prints machine-dependent numbers; the ratios between
   the three variants are the point.
-- `22_cluster.py` starts three `nats-server` processes at once.
+- `22_cluster.py` and `29_jetstream_cluster.py` start three `nats-server`
+  processes at once.
+- `26_tls.py` uses the `openssl` command-line tool to generate a throwaway
+  certificate.
+
+See [OVERVIEW.md](OVERVIEW.md) for how the pieces fit together.
 
 ## Further reading
 
