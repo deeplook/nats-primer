@@ -5,7 +5,7 @@ description = "A collection of small, self-contained Python scripts for learning
 readme = "README.md"
 license = "MIT"
 authors = [
-    { name = "Dinu Gherman", email = "gherman@darwin.in-berlin.de" },
+    { name = "Dinu Gherman" },
 ]
 keywords = ["nats", "messaging", "pubsub", "jetstream", "tutorial", "examples"]
 classifiers = [
