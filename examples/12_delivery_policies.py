@@ -18,9 +18,13 @@ async def main() -> None:
     nc = await connect()
     js = nc.jetstream()
     await js.add_stream(name="TICKER", subjects=["ticker.*"])
-    prices = [("ticker.AAPL", "101"), ("ticker.MSFT", "202"),
-              ("ticker.AAPL", "103"), ("ticker.MSFT", "204"),
-              ("ticker.AAPL", "105")]
+    prices = [
+        ("ticker.AAPL", "101"),
+        ("ticker.MSFT", "202"),
+        ("ticker.AAPL", "103"),
+        ("ticker.MSFT", "204"),
+        ("ticker.AAPL", "105"),
+    ]
     for subject, price in prices:
         await js.publish(subject, price.encode())
 
@@ -38,19 +42,27 @@ async def main() -> None:
     print("=== the stream holds 5 messages ===")
     await read("all", ConsumerConfig(deliver_policy=DeliverPolicy.ALL))
     await read("last", ConsumerConfig(deliver_policy=DeliverPolicy.LAST))
-    await read("from-seq-4", ConsumerConfig(
-        deliver_policy=DeliverPolicy.BY_START_SEQUENCE, opt_start_seq=4))
-    await read("last-per-subject", ConsumerConfig(
-        deliver_policy=DeliverPolicy.LAST_PER_SUBJECT))
+    await read(
+        "from-seq-4",
+        ConsumerConfig(deliver_policy=DeliverPolicy.BY_START_SEQUENCE, opt_start_seq=4),
+    )
+    await read(
+        "last-per-subject",
+        ConsumerConfig(deliver_policy=DeliverPolicy.LAST_PER_SUBJECT),
+    )
 
     print("=== NEW ignores history, sees only what comes next ===")
     psub = await js.pull_subscribe(
-        "ticker.*", durable="new",
-        config=ConsumerConfig(deliver_policy=DeliverPolicy.NEW))
+        "ticker.*",
+        durable="new",
+        config=ConsumerConfig(deliver_policy=DeliverPolicy.NEW),
+    )
     await js.publish("ticker.AAPL", b"106")
     msgs = await psub.fetch(5, timeout=1)
-    print("new              ->",
-          [f"{m.subject.split('.')[1]}={m.data.decode()}" for m in msgs])
+    print(
+        "new              ->",
+        [f"{m.subject.split('.')[1]}={m.data.decode()}" for m in msgs],
+    )
 
     await js.delete_stream("TICKER")
     await nc.drain()

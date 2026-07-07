@@ -16,21 +16,21 @@ from _nats_config import connect
 async def main() -> None:
     nc = await connect()
     js = nc.jetstream()
-    await js.add_stream(name="PAYMENTS", subjects=["payments.*"],
-                        duplicate_window=60)
+    await js.add_stream(name="PAYMENTS", subjects=["payments.*"], duplicate_window=60)
 
     print("=== publisher-side dedupe with Nats-Msg-Id ===")
     for attempt in range(1, 4):
-        ack = await js.publish("payments.eur", b"invoice-42: 99.00",
-                               headers={"Nats-Msg-Id": "invoice-42"})
-        print(f"attempt {attempt}: stream seq {ack.seq}, "
-              f"duplicate={ack.duplicate}")
+        ack = await js.publish(
+            "payments.eur", b"invoice-42: 99.00", headers={"Nats-Msg-Id": "invoice-42"}
+        )
+        print(f"attempt {attempt}: stream seq {ack.seq}, duplicate={ack.duplicate}")
     state = (await js.stream_info("PAYMENTS")).state
     print(f"3 publishes, but the stream stores {state.messages} message")
 
     print("=== a different id is a different message ===")
-    ack = await js.publish("payments.eur", b"invoice-43: 12.50",
-                           headers={"Nats-Msg-Id": "invoice-43"})
+    ack = await js.publish(
+        "payments.eur", b"invoice-43: 12.50", headers={"Nats-Msg-Id": "invoice-43"}
+    )
     print(f"stored at seq {ack.seq}, duplicate={ack.duplicate}")
 
     print("=== consumer-side: double-ack with ack_sync ===")

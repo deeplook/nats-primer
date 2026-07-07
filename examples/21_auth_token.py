@@ -28,9 +28,7 @@ async def main() -> None:
 
     print("=== connecting without credentials ===")
     try:
-        await nats.connect(
-            url, allow_reconnect=False, error_cb=quiet_error_cb
-        )
+        await nats.connect(url, allow_reconnect=False, error_cb=quiet_error_cb)
     except nats.errors.Error as exc:
         print(f"rejected: {exc}")
 

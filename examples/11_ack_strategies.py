@@ -47,8 +47,9 @@ async def main() -> None:
     await asyncio.sleep(0.7)
     msgs = await psub.fetch(3, timeout=2)
     for msg in msgs:
-        print(f"got '{msg.data.decode()}' again "
-              f"(delivery #{msg.metadata.num_delivered})")
+        print(
+            f"got '{msg.data.decode()}' again (delivery #{msg.metadata.num_delivered})"
+        )
         await msg.in_progress()  # extend the deadline for slow work
         await asyncio.sleep(0.2)
         await msg.ack()

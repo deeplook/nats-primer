@@ -30,8 +30,10 @@ async def main() -> None:
 
     print("=== concurrent requests ===")
     replies = await asyncio.gather(
-        *(nc.request("greet", name.encode(), timeout=1.0)
-          for name in ["Alice", "Bob", "Carol"])
+        *(
+            nc.request("greet", name.encode(), timeout=1.0)
+            for name in ["Alice", "Bob", "Carol"]
+        )
     )
     for r in replies:
         print("reply:", r.data.decode())

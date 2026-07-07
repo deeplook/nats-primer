@@ -45,8 +45,7 @@ async def main() -> None:
 
     print("=== consumer bookkeeping ===")
     cinfo = await js.consumer_info("TASKS", "workers")
-    print(f"delivered: {cinfo.delivered.consumer_seq}, "
-          f"pending: {cinfo.num_pending}")
+    print(f"delivered: {cinfo.delivered.consumer_seq}, pending: {cinfo.num_pending}")
 
     # The timed-out fetch can leave a late status message in the pull
     # subscription's inbox, which would stall drain() until its timeout.

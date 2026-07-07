@@ -33,8 +33,10 @@ async def main() -> None:
     psub = await js.pull_subscribe("events.>", durable="late-reader")
     msgs = await psub.fetch(5, timeout=2)
     for msg in msgs:
-        print(f"read [{msg.subject}] seq {msg.metadata.sequence.stream}:",
-              msg.data.decode())
+        print(
+            f"read [{msg.subject}] seq {msg.metadata.sequence.stream}:",
+            msg.data.decode(),
+        )
         await msg.ack()
 
     await js.delete_stream("EVENTS")

@@ -19,7 +19,7 @@ import time
 import nats
 from nats.aio.client import Client
 
-_shared_server: subprocess.Popen | None = None
+_shared_server: subprocess.Popen[bytes] | None = None
 _shared_url: str | None = None
 
 
@@ -27,7 +27,7 @@ def free_port() -> int:
     """Ask the OS for an unused TCP port."""
     with socket.socket() as sock:
         sock.bind(("127.0.0.1", 0))
-        return sock.getsockname()[1]
+        return int(sock.getsockname()[1])
 
 
 def _wait_until_ready(port: int, timeout: float = 5.0) -> None:
@@ -43,7 +43,7 @@ def _wait_until_ready(port: int, timeout: float = 5.0) -> None:
 
 def start_server(
     *extra_args: str, port: int | None = None, jetstream: bool = True
-) -> tuple[subprocess.Popen, str]:
+) -> tuple[subprocess.Popen[bytes], str]:
     """Start a throwaway nats-server; it is killed when the script exits.
 
     Returns the process and the client URL. Examples that need special
@@ -61,9 +61,7 @@ def start_server(
         store_dir = tempfile.mkdtemp(prefix="nats-primer-js-")
         cmd += ["-js", "-sd", store_dir]
     cmd += list(extra_args)
-    proc = subprocess.Popen(
-        cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
-    )
+    proc = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     def cleanup() -> None:
         proc.terminate()
@@ -90,6 +88,6 @@ def server_url() -> str:
     return _shared_url
 
 
-async def connect(**options) -> Client:
+async def connect(**options: object) -> Client:
     """Connect to the shared server (NATS_URL or an auto-started one)."""
     return await nats.connect(server_url(), **options)

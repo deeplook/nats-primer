@@ -27,11 +27,26 @@ def make_self_signed_cert(directory: Path) -> tuple[Path, Path]:
     """Create key.pem/cert.pem valid for 127.0.0.1, one day."""
     key, cert = directory / "key.pem", directory / "cert.pem"
     subprocess.run(
-        ["openssl", "req", "-x509", "-newkey", "rsa:2048", "-nodes",
-         "-keyout", str(key), "-out", str(cert), "-days", "1",
-         "-subj", "/CN=localhost",
-         "-addext", "subjectAltName=IP:127.0.0.1,DNS:localhost"],
-        check=True, capture_output=True,
+        [
+            "openssl",
+            "req",
+            "-x509",
+            "-newkey",
+            "rsa:2048",
+            "-nodes",
+            "-keyout",
+            str(key),
+            "-out",
+            str(cert),
+            "-days",
+            "1",
+            "-subj",
+            "/CN=localhost",
+            "-addext",
+            "subjectAltName=IP:127.0.0.1,DNS:localhost",
+        ],
+        check=True,
+        capture_output=True,
     )
     return key, cert
 
@@ -42,8 +57,15 @@ async def main() -> None:
     print("generated self-signed certificate for 127.0.0.1")
 
     port = free_port()
-    start_server("--tls", "--tlscert", str(cert), "--tlskey", str(key),
-                 port=port, jetstream=False)
+    start_server(
+        "--tls",
+        "--tlscert",
+        str(cert),
+        "--tlskey",
+        str(key),
+        port=port,
+        jetstream=False,
+    )
     url = f"tls://127.0.0.1:{port}"
     print("server started in TLS-only mode")
 

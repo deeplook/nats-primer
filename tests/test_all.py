@@ -1,8 +1,11 @@
 """Smoke test: every example module must run cleanly end to end.
 
-Each example is executed as a fresh subprocess with NATS_URL removed
-from the environment, so it starts (and tears down) its own throwaway
-nats-server. The only requirement here is a nats-server binary on PATH.
+Each example is executed as a subprocess. The session-scoped nats_server
+fixture starts one shared nats-server and sets NATS_URL so that examples
+using connect() from _nats_config pick it up automatically. Examples that
+call start_server() directly (auth, TLS, cluster, websocket, leafnode) manage
+their own server and ignore NATS_URL — they work correctly either way.
+The only requirement is a nats-server binary on PATH.
 """
 
 import os
@@ -17,9 +20,8 @@ MODULES = sorted(EXAMPLES_DIR.glob("[0-9][0-9]_*.py"))
 
 
 @pytest.mark.parametrize("module", MODULES, ids=lambda p: p.name)
-def test_example_runs_cleanly(module: Path) -> None:
+def test_example_runs_cleanly(module: Path, nats_server: str) -> None:
     env = os.environ.copy()
-    env.pop("NATS_URL", None)  # force examples onto their own server
     result = subprocess.run(
         [sys.executable, str(module)],
         capture_output=True,

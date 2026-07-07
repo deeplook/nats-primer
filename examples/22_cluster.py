@@ -23,9 +23,12 @@ async def main() -> None:
     for i in range(3):
         cluster_port = seed_route if i == 0 else free_port()
         proc, url = start_server(
-            "--cluster_name", "primer",
-            "--cluster", f"nats://127.0.0.1:{cluster_port}",
-            "--routes", f"nats://127.0.0.1:{seed_route}",
+            "--cluster_name",
+            "primer",
+            "--cluster",
+            f"nats://127.0.0.1:{cluster_port}",
+            "--routes",
+            f"nats://127.0.0.1:{seed_route}",
             jetstream=False,
         )
         procs.append(proc)

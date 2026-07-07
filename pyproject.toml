@@ -37,7 +37,14 @@ package = false
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+strict = true
+disable_error_code = ["untyped-decorator"]
+
 [dependency-groups]
 dev = [
+    "mypy>=1.0",
     "pytest>=9.0.3",
 ]

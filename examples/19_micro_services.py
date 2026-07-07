@@ -31,7 +31,9 @@ async def main() -> None:
         await req.respond(str(a / b).encode())
 
     svc = await micro.add_service(
-        nc, name="calculator", version="1.0.0",
+        nc,
+        name="calculator",
+        version="1.0.0",
         description="Toy arithmetic service",
     )
     calc = svc.add_group(name="calc")
@@ -46,20 +48,25 @@ async def main() -> None:
 
     print("=== structured error responses ===")
     reply = await nc.request("calc.divide", json.dumps([1, 0]).encode())
-    print("error code:", reply.headers.get("Nats-Service-Error-Code"),
-          "-", reply.headers.get("Nats-Service-Error"))
+    print(
+        "error code:",
+        reply.headers.get("Nats-Service-Error-Code"),
+        "-",
+        reply.headers.get("Nats-Service-Error"),
+    )
 
     print("=== discovery: any client can ping all services ===")
     reply = await nc.request("$SRV.PING", b"", timeout=1.0)
     ping = json.loads(reply.data)
-    print(f"found service '{ping['name']}' version {ping['version']}, "
-          f"id {ping['id']}")
+    print(f"found service '{ping['name']}' version {ping['version']}, id {ping['id']}")
 
     print("=== built-in per-endpoint stats ===")
     for ep in svc.stats().endpoints:
         avg_ms = ep.average_processing_time / 1e6
-        print(f"{ep.name}: {ep.num_requests} requests, "
-              f"{ep.num_errors} errors, avg {avg_ms:.2f} ms")
+        print(
+            f"{ep.name}: {ep.num_requests} requests, "
+            f"{ep.num_errors} errors, avg {avg_ms:.2f} ms"
+        )
 
     await svc.stop()
     await nc.drain()

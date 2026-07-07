@@ -15,8 +15,10 @@ from _nats_config import connect
 
 
 def report(label: str, count: int, seconds: float) -> None:
-    print(f"{label:<36} {count:>6} msgs in {seconds:6.2f}s "
-          f"-> {count / seconds:>10,.0f} msgs/s")
+    print(
+        f"{label:<36} {count:>6} msgs in {seconds:6.2f}s "
+        f"-> {count / seconds:>10,.0f} msgs/s"
+    )
 
 
 async def main() -> None:
@@ -38,19 +40,17 @@ async def main() -> None:
     start = time.perf_counter()
     for _ in range(count):
         await js.publish("bench.js", payload)
-    report("jetstream publish (await each ack)", count,
-           time.perf_counter() - start)
+    report("jetstream publish (await each ack)", count, time.perf_counter() - start)
 
     print("=== JetStream: concurrent publishes ===")
     count = 2_000
     batch = 200
     start = time.perf_counter()
     for _ in range(count // batch):
-        await asyncio.gather(
-            *(js.publish("bench.js", payload) for _ in range(batch))
-        )
-    report(f"jetstream publish (batches of {batch})", count,
-           time.perf_counter() - start)
+        await asyncio.gather(*(js.publish("bench.js", payload) for _ in range(batch)))
+    report(
+        f"jetstream publish (batches of {batch})", count, time.perf_counter() - start
+    )
 
     await js.delete_stream("BENCH")
     await nc.drain()

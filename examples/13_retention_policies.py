@@ -22,15 +22,17 @@ async def main() -> None:
         return (await js.stream_info(stream)).state.messages
 
     print("=== LIMITS: keep the last N messages ===")
-    await js.add_stream(name="LOGS", subjects=["logs.*"],
-                        retention=RetentionPolicy.LIMITS, max_msgs=3)
+    await js.add_stream(
+        name="LOGS", subjects=["logs.*"], retention=RetentionPolicy.LIMITS, max_msgs=3
+    )
     for i in range(6):
         await js.publish("logs.app", f"line-{i}".encode())
     print(f"published 6, stream keeps {await count('LOGS')} (max_msgs=3)")
 
     print("=== INTEREST: keep until all consumers acked ===")
-    await js.add_stream(name="ALERTS", subjects=["alerts.*"],
-                        retention=RetentionPolicy.INTEREST)
+    await js.add_stream(
+        name="ALERTS", subjects=["alerts.*"], retention=RetentionPolicy.INTEREST
+    )
     await js.publish("alerts.cpu", b"ignored")
     print(f"no consumers bound -> {await count('ALERTS')} messages retained")
     psub = await js.pull_subscribe("alerts.*", durable="pager")
@@ -42,8 +44,9 @@ async def main() -> None:
     print(f"after ack: {await count('ALERTS')} messages")
 
     print("=== WORK_QUEUE: each message consumed exactly once ===")
-    await js.add_stream(name="QUEUE", subjects=["queue.*"],
-                        retention=RetentionPolicy.WORK_QUEUE)
+    await js.add_stream(
+        name="QUEUE", subjects=["queue.*"], retention=RetentionPolicy.WORK_QUEUE
+    )
     for i in range(3):
         await js.publish("queue.jobs", f"job-{i}".encode())
     print(f"queued: {await count('QUEUE')} jobs")

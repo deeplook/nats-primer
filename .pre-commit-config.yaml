@@ -1,0 +1,36 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-ast
+      - id: debug-statements
+      - id: check-added-large-files
+      - id: check-merge-conflict
+
+  # Keep commit-time Python checks aligned with the Makefile: ruff is supplied by
+  # uv on demand, and only the fast syntax/undefined-name rules run by `make lint`
+  # are enforced here.
+  - repo: local
+    hooks:
+      - id: ruff-format
+        name: ruff (format)
+        entry: uv run --with ruff ruff format
+        language: system
+        types_or: [python, pyi]
+        require_serial: true
+      - id: ruff-critical
+        name: ruff (critical lint, auto-fix)
+        entry: uv run --with ruff ruff check --select E9,F63,F7,F82 --fix
+        language: system
+        types_or: [python, pyi]
+        require_serial: true
+      - id: mypy
+        name: mypy (type check)
+        entry: uv run --with mypy mypy --ignore-missing-imports tests/
+        language: system
+        pass_filenames: false
+        require_serial: true

@@ -24,12 +24,15 @@ async def main() -> None:
 
     print("=== stream info ===")
     info = await js.stream_info("ORDERS")
-    print(f"messages: {info.state.messages}, "
-          f"first seq: {info.state.first_seq}, last seq: {info.state.last_seq}")
+    print(
+        f"messages: {info.state.messages}, "
+        f"first seq: {info.state.first_seq}, last seq: {info.state.last_seq}"
+    )
 
     print("=== a mirror stays in sync automatically ===")
-    await js.add_stream(StreamConfig(
-        name="ORDERS-MIRROR", mirror=StreamSource(name="ORDERS")))
+    await js.add_stream(
+        StreamConfig(name="ORDERS-MIRROR", mirror=StreamSource(name="ORDERS"))
+    )
     await asyncio.sleep(0.5)
     minfo = await js.stream_info("ORDERS-MIRROR")
     print(f"mirror holds {minfo.state.messages} messages")
