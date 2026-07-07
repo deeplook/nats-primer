@@ -1,0 +1,125 @@
+# uv run --with pyyaml asciinema-player/demo/gen_asciicast.py
+cols: 80
+rows: 24
+type_delay: 0.05
+type_variance: 1.5
+pause_after_cmd: 1.0
+shell: bash
+steps:
+  - cmd: "# NATS Primer demo"
+  - cmd: ""
+
+  - marker: "01 - Connect"
+  - cmd: uv run examples/01_connect.py
+  - cmd: ""
+
+  - marker: "02 - Publish/subscribe"
+  - cmd: uv run examples/02_publish_subscribe.py
+  - cmd: ""
+
+  - marker: "03 - Wildcards"
+  - cmd: uv run examples/03_wildcards.py
+  - cmd: ""
+
+  - marker: "04 - Queue groups"
+  - cmd: uv run examples/04_queue_groups.py
+  - cmd: ""
+
+  - marker: "05 - Request/reply"
+  - cmd: uv run examples/05_request_reply.py
+  - cmd: ""
+
+  - marker: "06 - Headers"
+  - cmd: uv run examples/06_headers.py
+  - cmd: ""
+
+  - marker: "07 - JSON payloads"
+  - cmd: uv run examples/07_json_payloads.py
+  - cmd: ""
+
+  - marker: "08 - Lifecycle"
+  - cmd: uv run examples/08_lifecycle.py
+  - cmd: ""
+
+  - marker: "09 - JetStream intro"
+  - cmd: uv run examples/09_jetstream_intro.py
+  - cmd: ""
+
+  - marker: "10 - Pull consumers"
+  - cmd: uv run examples/10_pull_consumers.py
+  - cmd: ""
+
+  - marker: "11 - Ack strategies"
+  - cmd: uv run examples/11_ack_strategies.py
+  - cmd: ""
+
+  - marker: "12 - Delivery policies"
+  - cmd: uv run examples/12_delivery_policies.py
+  - cmd: ""
+
+  - marker: "13 - Retention policies"
+  - cmd: uv run examples/13_retention_policies.py
+  - cmd: ""
+
+  - marker: "14 - Exactly-once"
+  - cmd: uv run examples/14_exactly_once.py
+  - cmd: ""
+
+  - marker: "15 - Key-value"
+  - cmd: uv run examples/15_key_value.py
+  - cmd: ""
+
+  - marker: "16 - Object store"
+  - cmd: uv run examples/16_object_store.py
+  - cmd: ""
+
+  - marker: "17 - Stream management"
+  - cmd: uv run examples/17_stream_management.py
+  - cmd: ""
+
+  - marker: "18 - Scatter/gather"
+  - cmd: uv run examples/18_scatter_gather.py
+  - cmd: ""
+
+  - marker: "19 - Microservices"
+  - cmd: uv run examples/19_micro_services.py
+  - cmd: ""
+
+  - marker: "20 - Benchmark"
+  - cmd: uv run examples/20_benchmark.py
+  - cmd: ""
+
+  - marker: "21 - Auth token"
+  - cmd: uv run examples/21_auth_token.py
+  - cmd: ""
+
+  - marker: "22 - Cluster"
+  - cmd: uv run examples/22_cluster.py
+  - cmd: ""
+
+  - marker: "23 - FastStream"
+  - cmd: uv run examples/23_faststream.py
+  - cmd: ""
+
+  - marker: "24 - Ordered consumers"
+  - cmd: uv run examples/24_ordered_consumers.py
+  - cmd: ""
+
+  - marker: "25 - Permissions"
+  - cmd: uv run examples/25_permissions.py
+  - cmd: ""
+
+  - marker: "26 - TLS"
+  - cmd: uv run examples/26_tls.py
+  - cmd: ""
+
+  - marker: "27 - WebSocket"
+  - cmd: uv run examples/27_websocket.py
+  - cmd: ""
+
+  - marker: "28 - Leaf nodes"
+  - cmd: uv run examples/28_leafnodes.py
+  - cmd: ""
+
+  - marker: "29 - JetStream cluster"
+  - cmd: uv run examples/29_jetstream_cluster.py

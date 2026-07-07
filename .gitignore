@@ -11,3 +11,6 @@ wheels/
 
 # Runtime output from tutorial scripts
 out/
+
+# Working files
+work/
