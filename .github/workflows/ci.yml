@@ -29,3 +29,11 @@ jobs:
 
       - name: Run tests
         run: uv run python -m pytest -v
+
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Build the Docker image
+        run: docker build -t nats-primer .
