@@ -1,8 +1,9 @@
 .DEFAULT_GOAL := help
 
 EXAMPLE ?= examples/01_connect.py
+IMAGE ?= nats-primer
 
-.PHONY: help install format lint test test-v run nats-version check-all clean
+.PHONY: help install format lint test test-v run nats-version docker-build docker-run docker-test compose-run compose-down check-all clean
 
 help:  ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*##' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "}; {printf "  %-14s %s\n", $$1, $$2}'
@@ -28,6 +29,21 @@ run:  ## Run one example (override with EXAMPLE=examples/02_publish_subscribe.py
 
 nats-version:  ## Show the nats-server version used by examples/tests
 	nats-server --version
+
+docker-build:  ## Build the Docker image
+	docker build -t $(IMAGE) .
+
+docker-run:  ## Run one example in Docker (override with EXAMPLE=...)
+	docker run --rm $(IMAGE) $(EXAMPLE)
+
+docker-test:  ## Run the test suite in Docker
+	docker run --rm $(IMAGE) python -m pytest
+
+compose-run:  ## Run one example against a standalone JetStream server
+	docker compose run --rm primer $(EXAMPLE)
+
+compose-down:  ## Stop the compose stack and remove its volume
+	docker compose down -v
 
 check-all: install format lint test clean  ## Run format, lint, test, and clean
 	@echo "All checks passed!"

@@ -1,0 +1,29 @@
+# An alternative to the auto-started, throwaway server: a persistent JetStream
+# server that the examples connect to via NATS_URL.
+#
+#   docker compose run --rm primer examples/09_jetstream_intro.py
+#
+# The JetStream store survives between runs in a named volume. Examples 21, 22,
+# and 25-29 always start their own dedicated servers regardless of NATS_URL, so
+# they ignore this server — run those with plain `docker run` instead.
+
+services:
+  nats:
+    image: nats:2
+    command: ["-js", "-sd", "/data", "-m", "8222"]
+    ports:
+      - "4222:4222"   # client connections
+      - "8222:8222"   # HTTP monitoring
+    volumes:
+      - jetstream:/data
+
+  primer:
+    build: .
+    depends_on:
+      - nats
+    environment:
+      NATS_URL: "nats://nats:4222"
+    command: ["examples/01_connect.py"]
+
+volumes:
+  jetstream:
