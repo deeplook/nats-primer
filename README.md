@@ -68,6 +68,38 @@ uv sync
 
 That's it — no configuration files, no running services needed.
 
+## Docker
+
+The container ships `nats-server`, `openssl`, Python 3.12, and uv, so the
+examples run without installing anything on the host. Build once:
+
+```bash
+docker build -t nats-primer .
+```
+
+Run any example — each still starts its own throwaway server inside the
+container, exactly as it does on the host:
+
+```bash
+docker run --rm nats-primer examples/02_publish_subscribe.py
+```
+
+### Running against a standalone server
+
+As an alternative to the auto-started server, `docker-compose.yml` brings up a
+persistent JetStream server and points the examples at it through `NATS_URL`:
+
+```bash
+docker compose run --rm primer examples/09_jetstream_intro.py
+```
+
+The server keeps its JetStream data in a named volume between runs, and its
+monitoring endpoint is exposed at http://localhost:8222.
+
+Examples 21, 22, and 25–29 always start their own dedicated servers (they
+reconfigure or cluster them), so they ignore the compose server and the
+`NATS_URL` setting — run those with plain `docker run` above.
+
 ## Modules
 
 Run any script with `uv run examples/<file>`. They are designed to be read
