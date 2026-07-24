@@ -9,9 +9,8 @@ each message shows how often it has been delivered.
 
 import asyncio
 
-from nats.js.api import ConsumerConfig
-
 from _nats_config import connect
+from nats.js.api import ConsumerConfig
 
 
 async def main() -> None:

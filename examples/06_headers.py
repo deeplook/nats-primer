@@ -9,9 +9,8 @@ Nats-Msg-Id for deduplication, shown later in this primer).
 import asyncio
 import uuid
 
-from nats.aio.msg import Msg
-
 from _nats_config import connect
+from nats.aio.msg import Msg
 
 
 async def main() -> None:

@@ -11,7 +11,6 @@ import asyncio
 
 import nats
 import nats.errors
-
 from _nats_config import start_server
 
 TOKEN = "s3cr3t"

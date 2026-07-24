@@ -8,9 +8,8 @@ adds persistence later in this primer). Messages are byte payloads.
 
 import asyncio
 
-from nats.aio.msg import Msg
-
 from _nats_config import connect
+from nats.aio.msg import Msg
 
 
 async def main() -> None:

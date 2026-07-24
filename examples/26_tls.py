@@ -15,7 +15,6 @@ import tempfile
 from pathlib import Path
 
 import nats
-
 from _nats_config import free_port, start_server
 
 # On close, asyncio warns that nats-py's transport returns True from

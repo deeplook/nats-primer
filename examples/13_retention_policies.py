@@ -9,9 +9,8 @@ persistent task queue where each task is handled exactly once.
 
 import asyncio
 
-from nats.js.api import RetentionPolicy
-
 from _nats_config import connect
+from nats.js.api import RetentionPolicy
 
 
 async def main() -> None:

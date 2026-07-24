@@ -13,10 +13,10 @@ install:  ## Install all dependencies
 
 format:  ## Auto-format and fix lint issues
 	uv run --with ruff ruff format examples tests
-	uv run --with ruff ruff check --select E9,F63,F7,F82 --fix examples tests
+	uv run --with ruff ruff check --select E9,F63,F7,F82,I --fix examples tests
 
-lint:  ## Run critical ruff checks (syntax, undefined names)
-	uv run --with ruff ruff check --select E9,F63,F7,F82 examples tests
+lint:  ## Run critical ruff checks (syntax, undefined names, import order)
+	uv run --with ruff ruff check --select E9,F63,F7,F82,I examples tests
 
 test:  ## Run the test suite
 	uv run python -m pytest

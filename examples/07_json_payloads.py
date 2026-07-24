@@ -11,9 +11,8 @@ import asyncio
 import json
 from dataclasses import asdict, dataclass
 
-from nats.aio.msg import Msg
-
 from _nats_config import connect
+from nats.aio.msg import Msg
 
 
 @dataclass

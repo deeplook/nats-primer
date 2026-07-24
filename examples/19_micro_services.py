@@ -10,10 +10,9 @@ monitoring need no extra infrastructure.
 import asyncio
 import json
 
+from _nats_config import connect
 from nats import micro
 from nats.micro import Request
-
-from _nats_config import connect
 
 
 async def main() -> None:

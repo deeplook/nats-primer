@@ -8,9 +8,8 @@ message stream by topic without any broker-side configuration.
 
 import asyncio
 
-from nats.aio.msg import Msg
-
 from _nats_config import connect
+from nats.aio.msg import Msg
 
 
 async def main() -> None:

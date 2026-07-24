@@ -10,7 +10,6 @@ ready — the natural fit for scalable workers.
 import asyncio
 
 import nats.errors
-
 from _nats_config import connect
 
 

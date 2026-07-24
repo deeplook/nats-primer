@@ -9,11 +9,10 @@ nats-py client used throughout this primer.
 
 import asyncio
 
+from _nats_config import server_url
 from faststream import ExceptionMiddleware
 from faststream.nats import NatsBroker
 from pydantic import BaseModel, PositiveInt, ValidationError
-
-from _nats_config import server_url
 
 
 class Order(BaseModel):

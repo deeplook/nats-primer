@@ -11,7 +11,6 @@ watch a client reconnect.
 import asyncio
 
 import nats
-
 from _nats_config import free_port, start_server
 
 

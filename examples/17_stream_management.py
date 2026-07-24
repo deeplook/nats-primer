@@ -8,9 +8,8 @@ scaling out readers or migrating data.
 
 import asyncio
 
-from nats.js.api import StreamConfig, StreamSource
-
 from _nats_config import connect
+from nats.js.api import StreamConfig, StreamSource
 
 
 async def main() -> None:

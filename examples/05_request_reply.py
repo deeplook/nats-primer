@@ -10,9 +10,8 @@ responder is running, the server answers immediately with a
 import asyncio
 
 import nats.errors
-from nats.aio.msg import Msg
-
 from _nats_config import connect
+from nats.aio.msg import Msg
 
 
 async def main() -> None:

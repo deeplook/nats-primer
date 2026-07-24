@@ -13,7 +13,6 @@ import tempfile
 from pathlib import Path
 
 import nats
-
 from _nats_config import free_port, start_server
 
 CONFIG = """

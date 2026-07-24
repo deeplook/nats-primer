@@ -13,7 +13,6 @@ from pathlib import Path
 
 import nats
 import nats.errors
-
 from _nats_config import free_port, start_server
 
 CONFIG = """

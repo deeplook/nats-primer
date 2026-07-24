@@ -9,9 +9,8 @@ for every subject — a materialized snapshot.
 
 import asyncio
 
-from nats.js.api import ConsumerConfig, DeliverPolicy
-
 from _nats_config import connect
+from nats.js.api import ConsumerConfig, DeliverPolicy
 
 
 async def main() -> None:

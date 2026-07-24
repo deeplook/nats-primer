@@ -11,7 +11,6 @@ import asyncio
 import tempfile
 
 import nats
-
 from _nats_config import free_port, start_server
 
 

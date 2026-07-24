@@ -12,9 +12,8 @@ import hashlib
 import os
 from pathlib import Path
 
-from nats.js.errors import NotFoundError
-
 from _nats_config import connect
+from nats.js.errors import NotFoundError
 
 OUT_DIR = Path(__file__).resolve().parent.parent / "out"
 

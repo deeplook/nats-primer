@@ -10,9 +10,8 @@ and quorum patterns work exactly like this.
 import asyncio
 
 import nats.errors
-from nats.aio.msg import Msg
-
 from _nats_config import connect
+from nats.aio.msg import Msg
 
 
 async def main() -> None:

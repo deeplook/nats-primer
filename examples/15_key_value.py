@@ -8,9 +8,8 @@ feature flags, or service state.
 
 import asyncio
 
-from nats.js.errors import KeyNotFoundError
-
 from _nats_config import connect
+from nats.js.errors import KeyNotFoundError
 
 
 async def main() -> None:
