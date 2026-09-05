@@ -1,7 +1,8 @@
 # NATS Primer
 
 [![CI](https://github.com/deeplook/nats-primer/actions/workflows/ci.yml/badge.svg)](https://github.com/deeplook/nats-primer/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Downloads](https://img.shields.io/github/downloads/deeplook/nats-primer/total?label=Downloads&logo=github)](https://github.com/deeplook/nats-primer/releases)
+[![License](https://img.shields.io/github/license/deeplook/nats-primer?logo=github)](LICENSE)
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
 [![NATS](https://img.shields.io/badge/NATS-2.x-27AAE1.svg?logo=natsdotio)](https://nats.io)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/deeplook)
