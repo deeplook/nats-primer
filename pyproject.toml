@@ -27,10 +27,6 @@ dependencies = [
 [project.urls]
 Repository = "https://github.com/deeplook/nats-primer"
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [tool.uv]
 package = false
 
